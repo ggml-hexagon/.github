@@ -12,7 +12,7 @@ Qualcomm Hexagon SDK提供了两种RPC机制：native FastRPC与dspqueue。Qualc
 
 这意味着完全可以在原生 FastRPC 之上，实现一套更高效的方案：用一次 `fastrpc_mmap` 建立单个内存池，用同步 `invoke` 携带整张计算图批次，把算子卸载到 Hexagon NPU 上执行。
 
-Jeff Zhou 多次尝试将该方案合入上游 `llama.cpp`：2025 年 7 月的 [PR #12326](https://github.com/ggml-org/llama.cpp/pull/12326) 被封禁；2026 年的 [PR #26373](https://github.com/ggml-org/llama.cpp/pull/26373) 与最新的 [PR #27642](https://github.com/ggml-org/llama.cpp/pull/27642)（2026/08/24 提交）相继被上游维护者关闭，自动检查器将其标记为"Large PR"，要求先有 RFC 讨论。为避免贡献反复被埋没、并保证这套基于 FastRPC 的实现能被长期维护和迭代，`ggml-hexagon` 组织2026年07月27日由此而生。
+Jeff Zhou 多次尝试将该方案合入上游 `llama.cpp`：2025 年 7 月的 [PR #12326](https://github.com/ggml-org/llama.cpp/pull/12326) 被封禁；不知道什么原因，2026 年的 [PR #26373](https://github.com/ggml-org/llama.cpp/pull/26373) 与最新的 [PR #27642](https://github.com/ggml-org/llama.cpp/pull/27642)（2026/08/24 提交）相继被上游维护者关闭。为避免贡献反复被埋没、并保证这套基于 FastRPC 的实现能被长期维护和迭代，`ggml-hexagon` 组织2026年07月27日由此而生。
 
 ***
 
