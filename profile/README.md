@@ -9,6 +9,7 @@ This organization maintains FastRPC‑based Qualcomm Hexagon NPU backend for ggm
 
 ### Key Features
 - Compatible with [Qualcomm's dspqueue-based ggml-hexagon](https://github.com/ggml-org/llama.cpp/tree/master/ggml/src/ggml-hexagon)
+- PP and TG offer some advantages over Qualcomm's dspqueue‑based ggml‑hexagon for certain modern models
 - Originated from upstream [PR #27642](https://github.com/ggml-org/llama.cpp/pull/27642)
 
 ### Repositories
