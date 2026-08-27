@@ -14,7 +14,7 @@
 - 源自上游[PR #27642](https://github.com/ggml-org/llama.cpp/pull/27642)
 
 ### 仓库列表
-- [ggml‑hexagon](https://github.com/ggml‑hexagon/ggml‑hexagon): 主后端仓库
+- [ggml‑hexagon](https://github.com/ggml-hexagon/ggml-hexagon): 主后端仓库
 
 ---
 
@@ -26,5 +26,5 @@ This organization maintains FastRPC‑based Qualcomm Hexagon NPU backend for ggm
 - Originated from upstream [PR #27642](https://github.com/ggml-org/llama.cpp/pull/27642)
 
 ### Repositories
-- [ggml‑hexagon](https://github.com/ggml‑hexagon/ggml‑hexagon): Main backend repository
+- [ggml‑hexagon](https://github.com/ggml-hexagon/ggml-hexagon): Main backend repository
 
