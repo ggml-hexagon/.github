@@ -2,7 +2,7 @@
 
 > 让大语言模型推理跑在高通 Hexagon NPU 上——基于原生 FastRPC 的轻量、高效、长期维护的 ggml-hexagon 后端
 
-`ggml-hexagon` 是一个面向 Qualcomm Hexagon NPU 的独立维护组织，目标是长期维护和发展一套基于**原生 FastRPC 机制**的 ggml-hexagon 后端变体（fastrpc 变体），并持续跟踪上游 `llama.cpp` / `ggml` 项目的演进。该后端面向 Android 与 WoA（Windows on Snapdragon）设备，可与 Qualcomm 官方的 dspqueue 后端共存，二者关系类似 `llama.cpp` 内的 ggml-openvino vs ggml-sycl，或 ggml-cuda vs ggml-hip。本组织由独立开发人员 Jeff Zhou （ GitHub: [`zhouwg`](https://github.com/zhouwg) / [`jeffzhou-zhouwg`](https://github.com/jeffzhou-zhouwg) /  [`jeff-zhouwg`](https://github.com/jeff-zhouwg) ）发起，承载其从 2024 年 3 月起在 Hexagon NPU 后端上的持续工程实践。
+`ggml-hexagon` 是一个面向 Qualcomm Hexagon NPU 的独立维护组织，目标是长期维护和发展一套基于**原生 FastRPC 机制**的 ggml-hexagon 后端变体（fastrpc 变体），并持续跟踪上游 `llama.cpp` / `ggml` 项目的演进。该后端面向基于Snapdragon SoC的Android / Linux / WoS（Windows on Snapdragon）设备，可与 Qualcomm 官方的 dspqueue 后端共存，二者关系类似 `llama.cpp` 内的 ggml-openvino vs ggml-sycl，或 ggml-cuda vs ggml-hip。本组织由独立开发人员 Jeff Zhou （ GitHub: [`zhouwg`](https://github.com/zhouwg) / [`jeffzhou-zhouwg`](https://github.com/jeffzhou-zhouwg) /  [`jeff-zhouwg`](https://github.com/jeff-zhouwg) ）发起，承载其从 2024 年 3 月起在 Hexagon NPU 后端上的持续工程实践。
 
 ***
 
