@@ -8,9 +8,9 @@
 
 ## 这个组织为什么存在
 
-Qualcomm 官方的 ggml-hexagon 后端使用一套名为 `dspqueue` 的异步队列框架，在 AP（应用处理器）与 DSP（cDSP / HTP / NPU）之间交换数据。`dspqueue` 本质上是原生 FastRPC 机制的高层封装——而 LLM 推理在本质上是同步的，且 AP 与 NPU 共享同一块 DDR 物理内存（ION 共享内存），两者能同时"看到"同一区域。
+Qualcomm Hexagon SDK提供了两种RPC机制：native FastRPC与dspqueue。Qualcomm 官方的 ggml-hexagon 后端使用 `dspqueue` 的异步队列框架，在 AP（应用处理器）与 DSP（cDSP / HTP / NPU）之间交换数据。`dspqueue` 本质上是原生 FastRPC 机制的高层封装 ------ 而 LLM 推理在本质上是同步的，且 AP 与 NPU 共享同一块 DDR 物理内存（ION 共享内存），两者能同时"看到"同一区域。
 
-这意味着完全可以在原生 FastRPC 之上，实现一套更简洁、更高效的方案：用一次 `fastrpc_mmap` 建立单个 ION 内存池，用同步 `invoke` 携带整张计算图批次，把算子卸载到 Hexagon NPU 上执行。这种做法去掉了 dspqueue 的复杂封装，也减少了 FastRPC 自身的开销。
+这意味着完全可以在原生 FastRPC 之上，实现一套更高效的方案：用一次 `fastrpc_mmap` 建立单个内存池，用同步 `invoke` 携带整张计算图批次，把算子卸载到 Hexagon NPU 上执行。
 
 Jeff Zhou 多次尝试将该方案合入上游 `llama.cpp`：2025 年 7 月的 [PR #12326](https://github.com/ggml-org/llama.cpp/pull/12326) 被封禁；2026 年的 [PR #26373](https://github.com/ggml-org/llama.cpp/pull/26373) 与最新的 [PR #27642](https://github.com/ggml-org/llama.cpp/pull/27642)（2026/08/24 提交）相继被维护者 ggerganov 关闭，自动检查器将其标记为"Large PR"，要求先有 RFC 讨论。为避免贡献反复被埋没、并保证这套基于 FastRPC 的实现能被长期维护和迭代，`ggml-hexagon` 组织2026年07月27日由此而生。
 
@@ -66,24 +66,6 @@ option(GGML_HEXAGON_USE_MEMPOOL
 | cache 一致性           | NPU 侧：角色感知（权重 vs 激活）          | 内核态驱动标志（按批次统一处理）                      |
 | lm-head 卸载到 DSP     | 可行                            | 不可行                                   |
 
-dspqueue 变体的 per-chunk fd 数量、per-chunk mmap 调用、DSP 侧 `bi` 间接寻址等开销，是 per-chunk API 设计**固有的**：每多一个缓冲区，就要多一个 fd、一次 mmap、一个 `htp_buf_desc[]` 条目。fastrpc 变体的单一内存池没有这些 per-chunk 成本。
-
-fastrpc 变体的 FastRPC IDL 也比 dspqueue 变体更简洁，原因正是：不需要 dspqueue，且使用 ION 内存池而非 per-buffer 共享内存（详见 [Discussion #18](https://github.com/zhouwg/ggml-hexagon/discussions/18)）。`self-build-jz` 基线中该文件名为 `ggml_dsp.idl`，最新上游 [PR #27642](https://github.com/ggml-org/llama.cpp/pull/27642) 将其重命名为 `ggml_htp.idl`。基线 IDL 内容如下：
-
-```c
-#include "AEEStdDef.idl"
-#include "remote.idl"
-
-const string IDL_VERSION = "0.0.2";
-
-interface ggml_dsp : remote_handle64 {
-    AEEResult setclocks(in int32 diag_info, in int32 reserverd1,
-                        in int32 reserverd2, in int32 thread_counts);
-    AEEResult register_ion(in uint32 ion_fd, in uint32 size_lo, in uint32 size_hi);
-    AEEResult execute_batch(in uint32 batch_offset, in uint32 batch_size);
-};
-```
-
 ***
 
 ## 关键优势：把 lm-head 卸载到 DSP
@@ -123,7 +105,7 @@ fastrpc 变体在初始化时映射一次内存池（v79 上容量可探测到 4
 
 * **大模型明显劣势**：Qwen3.5-9B（5.0 GiB）PP 落后 90.1%、TG 落后 14.3%，根因是 DSP 4 GiB 虚拟地址空间限制（见下节），溢出权重回退到堆分配 + mirror memcpy，产生显著开销。
 
-2026 年 7 月 [Discussion #18](https://github.com/zhouwg/ggml-hexagon/discussions/18) 中"全面超越"的说法，已被这份更细致的八月基准修正为更真实的混合图景。
+
 
 ***
 
@@ -133,7 +115,7 @@ fastrpc 变体在初始化时映射一次内存池（v79 上容量可探测到 4
 
 * **FastRPC async 被禁用**。
 
-以上限制均来自 [PR #27642](https://github.com/ggml-org/llama.cpp/pull/27642)。
+
 
 ***
 
@@ -143,7 +125,7 @@ fastrpc 变体在初始化时映射一次内存池（v79 上容量可探测到 4
 
 * `master`：跟踪上游 `llama.cpp` 项目。
 
-* `self-build-jz`：默认分支，Qualcomm 的 ggml-hexagon 与 fastrpc 变体的全部代码都在这里。
+* `self-build-jz`：默认分支，Qualcomm 的 dspqueue-based ggml-hexagon 与 fastrpc-based ggml-hexagon的全部代码都在这里。
 
 [PR #27642](https://github.com/ggml-org/llama.cpp/pull/27642) 中真正新增或修改的文件极少：
 
@@ -165,7 +147,7 @@ fastrpc 变体曾于 2026/07/26 把 `htp/` 分叉为独立的 `kernels/` 目录�
 
 ## 如何构建
 
-构建已在 Ubuntu 20.04（2025/05/31 EOL）与 Ubuntu 26.04 上验证，推荐 Ubuntu 26.04（详见 [构建指南](https://github.com/zhouwg/ggml-hexagon/blob/self-build-jz/docs/how-to-build-ggmlhexagon.md)）。构建脚本首次运行时会**自动下载并配置依赖**（8 个模型与所需 SDK）。
+构建已在 Ubuntu 20.04（2025/05/31 EOL）与 Ubuntu 26.04 上验证，推荐 Ubuntu 26.04。构建脚本首次运行时会**自动下载并配置依赖**（8 个模型与所需 SDK）。
 
 获取源码并构建 fastrpc 变体：
 
