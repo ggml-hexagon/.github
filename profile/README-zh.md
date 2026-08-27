@@ -139,9 +139,9 @@ fastrpc 变体在初始化时映射一次内存池（v79 上容量可探测到 4
 | `ggml/src/ggml-hexagon/htp/CMakeLists.txt`       | 修改；变体切换                                |
 | `scripts/build-run-ggmlhexagon-android.sh`       | 可选；简化两后端的构建与 CI                        |
 
-dspqueue 变体侧仍为 `ggml-hexagon.cpp` + `htp/main.c` + `htp/htp_iface.idl`。两个变体共享同一棵 `htp/*.c` 算子源码树，mempool 专有部分由 `GGML_HEXAGON_USE_MEMPOOL` 守卫。
+dspqueue 变体侧仍为 `ggml-hexagon.cpp` + `htp/main.c` + `htp/htp_iface.idl`。两个变体共享同一棵 `htp/*.c` 算子源码树。
 
-fastrpc 变体曾于 2026/07/26 把 `htp/` 分叉为独立的 `kernels/` 目录（钉在基线提交 `2be3826c9`），以避开 Qualcomm [PR #26049](https://github.com/ggml-org/llama.cpp/pull/26049) 导致的推理输出乱码。该分叉已于 2026/08/22 合并回 `htp/` 并删除，此后两个变体编译同一份 `htp/*.c` 算子源码——上游算子改进只需落地一次，两个变体同时受益（详见 [架构分析文档](https://github.com/zhouwg/ggml-hexagon/blob/self-build-jz/docs/backend/jz-ggml-hexagon/ion-mempool-vs-perbuffer-analysis-20260713.md)）。
+
 
 ***
 
