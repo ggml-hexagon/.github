@@ -8,7 +8,7 @@
 
 ## 这个组织为什么存在
 
-Qualcomm Hexagon SDK提供了两种RPC机制：native FastRPC与dspqueue。Qualcomm 官方的 ggml-hexagon 后端使用 `dspqueue` 的异步队列框架，在 AP（应用处理器）与 DSP（cDSP / HTP / NPU）之间交换数据。`dspqueue` 本质上是原生 FastRPC 机制的高层封装 ------ 而 LLM 推理在本质上是同步的，且 AP 与 NPU 共享同一块 DDR 物理内存（ION 共享内存），两者能同时"看到"同一区域。
+Qualcomm Hexagon SDK提供了两种RPC机制：native FastRPC与dspqueue。Qualcomm 官方的 ggml-hexagon 后端使用 `dspqueue` 的异步队列框架，在 AP（应用处理器）与 DSP（aka cDSP / HTP / NPU）之间交换数据。`dspqueue` 本质上是原生 FastRPC 机制的高层封装 ------ 而 LLM 推理在本质上是同步的，且 AP 与 NPU 共享同一块 DDR 物理内存，两者能同时"看到"同一区域。
 
 这意味着完全可以在原生 FastRPC 之上，实现一套更高效的方案：用一次 `fastrpc_mmap` 建立单个内存池，用同步 `invoke` 携带整张计算图批次，把算子卸载到 Hexagon NPU 上执行。
 
