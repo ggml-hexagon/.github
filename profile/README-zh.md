@@ -2,7 +2,7 @@
 
 > 让大语言模型推理跑在高通 Hexagon NPU 上——基于原生 FastRPC 的轻量、高效、长期维护的 ggml-hexagon 后端
 
-`ggml-hexagon` 是一个面向 Qualcomm Hexagon NPU 的独立维护组织，目标是长期维护和发展一套基于**原生 FastRPC 机制**的 ggml-hexagon 后端变体（fastrpc 变体），并持续跟踪上游 `llama.cpp` / `ggml` 项目的演进。该后端面向 Android 与 WoA（Windows on Snapdragon）设备，可与 Qualcomm 官方的 dspqueue 后端共存，二者关系类似 `llama.cpp` 内的 ggml-openvino vs ggml-sycl，或 ggml-cuda vs ggml-hip。本组织由独立贡献者 Jeff Zhou（GitHub: [`zhouwg`](https://github.com/zhouwg) / [`jeffzhou-zhouwg`](https://github.com/jeffzhou-zhouwg) /  [/`jeff-zhouwg`](https://github.com/jeff-zhouwg)）发起，承载其从 2025 年 3 月起在 Hexagon NPU 后端上的持续工程实践。
+`ggml-hexagon` 是一个面向 Qualcomm Hexagon NPU 的独立维护组织，目标是长期维护和发展一套基于**原生 FastRPC 机制**的 ggml-hexagon 后端变体（fastrpc 变体），并持续跟踪上游 `llama.cpp` / `ggml` 项目的演进。该后端面向 Android 与 WoA（Windows on Snapdragon）设备，可与 Qualcomm 官方的 dspqueue 后端共存，二者关系类似 `llama.cpp` 内的 ggml-openvino vs ggml-sycl，或 ggml-cuda vs ggml-hip。本组织由独立贡献者 Jeff Zhou（GitHub: [`zhouwg`](https://github.com/zhouwg) / [`jeffzhou-zhouwg`](https://github.com/jeffzhou-zhouwg) /  [`jeff-zhouwg`](https://github.com/jeff-zhouwg)）发起，承载其从 2025 年 3 月起在 Hexagon NPU 后端上的持续工程实践。
 
 ***
 
@@ -12,7 +12,7 @@ Qualcomm 官方的 ggml-hexagon 后端使用一套名为 `dspqueue` 的异步队
 
 这意味着完全可以在原生 FastRPC 之上，实现一套更简洁、更高效的方案：用一次 `fastrpc_mmap` 建立单个 ION 内存池，用同步 `invoke` 携带整张计算图批次，把算子卸载到 Hexagon NPU 上执行。这种做法去掉了 dspqueue 的复杂封装，也减少了 FastRPC 自身的开销。
 
-Jeff Zhou 多次尝试将该方案合入上游 `llama.cpp`：2025 年 7 月的 [PR #12326](https://github.com/ggml-org/llama.cpp/pull/12326) 被封禁；2026 年的 [PR #26373](https://github.com/ggml-org/llama.cpp/pull/26373) 与最新的 [PR #27642](https://github.com/ggml-org/llama.cpp/pull/27642)（2026/08/24 提交）相继被维护者 ggerganov 关闭，自动检查器将其标记为"Large PR"，要求先有 RFC 讨论。为避免贡献反复被埋没、并保证这套基于 FastRPC 的实现能被长期维护和迭代，`ggml-hexagon` 组织2026-07-27由此而生（详见 [Discussion #18](https://github.com/zhouwg/ggml-hexagon/discussions/18)）。
+Jeff Zhou 多次尝试将该方案合入上游 `llama.cpp`：2025 年 7 月的 [PR #12326](https://github.com/ggml-org/llama.cpp/pull/12326) 被封禁；2026 年的 [PR #26373](https://github.com/ggml-org/llama.cpp/pull/26373) 与最新的 [PR #27642](https://github.com/ggml-org/llama.cpp/pull/27642)（2026/08/24 提交）相继被维护者 ggerganov 关闭，自动检查器将其标记为"Large PR"，要求先有 RFC 讨论。为避免贡献反复被埋没、并保证这套基于 FastRPC 的实现能被长期维护和迭代，`ggml-hexagon` 组织2026年07月27日由此而生。
 
 ***
 
