@@ -23,7 +23,7 @@ Jeff Zhou 多次尝试将该方案合入上游 `llama.cpp`：2025 年 7 月的 [
 | Snapdragon 8 Gen 2               | v73    | 未知   | 未测试       |
 | Snapdragon 8 Gen 3               | v75    | 8MB  | 已测试验证     |
 | Snapdragon 8 Elite（8 Gen 4）      | v79    | 8MB  | 已测试验证（推荐） |
-| Snapdragon 8 Elite Gen5（8 Gen 5） | v81    | 未知   | 未测试       |
+| Snapdragon 8 Elite Gen5（8 Gen 5） | v81    | 8MB   | 未测试       |
 | Snapdragon X Elite               | v79    | 未知   | 未测试       |
 | Snapdragon X2 Elite              | v81    | 未知   | 未测试       |
 
