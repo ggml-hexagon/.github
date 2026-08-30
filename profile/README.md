@@ -44,3 +44,8 @@ Per project llama.cpp's policies, I am disclosing that significant portions of t
 The core ideas originate from my fully‑original, hand‑written PR‑12326. Starting in June 2026, I have used AI coding agents to assist with brainstorming, drafting code snippets, composing technical documentation (with questions and scope defined by me), and generating test reports.
 
 I have inspected, tested, and fully understand all code within ggml-hexagon-fastrpc.cpp (formerly ggml-hexagon-jz.cpp) and htp/entry.c, excluding quantization-type conversion routines. Most importantly, all technical decisions, design directions and code adjustments are made solely by me.
+
+## Language Policy
+
+Both English and Chinese posts are accepted for discussions and issues in this project.
+
