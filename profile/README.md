@@ -40,25 +40,21 @@ FastRPC‑based ggml‑hexagon originated from upstream [PR #12326](https://gith
 > This section explains core design decisions, alternatives considered, and accepted trade‑offs.
 
 1. Re‑use existing Hexagon kernels
-    - Pro: Avoid duplicate maintenance of HTP operator implementations. All existing performance‑optimized HVX/HMX kernels are shared between the two backends.**Do not touch the Hexagon kernel code** to reduce maintenance burden, only focus on ggml-hexagon-fastrpc.cpp and entry.c.
+    - Pro: Avoid duplicate maintenance of HTP operator implementations. All existing performance‑optimized HVX/HMX kernels are shared between the two backends. **Do not touch the Hexagon kernel code** to reduce maintenance burden, only focus on ggml-hexagon-fastrpc.cpp and entry.c.
     - Con: Backend improvements to HTP operators must land once and benefit both transports; host‑side logic differs for memory pool / RPC handling.
 
 2. Build‑time variant selection, no ABI difference
     - Two backends live within one source directory and one build system. Output artifacts (libggml‑hexagon.so, libggml‑htp‑vXX.so) have identical filenames.
     - Pro: Existing downstream integrations do not need to change linkage / library loading logic.
-    - Con: You must re‑compile to switch RPC transport; cannot swap transports at runtime.
+    - Con: You must re‑compile to switch RPC transport and toggle runtime libs manually(refer to section:How to reproduce the benchmark results); cannot swap transports at runtime.
 
 3. Single shared mempool + NPU‑side role‑aware cache coherency
     - Resident weights vs per‑batch activations are differentiated on NPU side; first‑touch cache invalidation is applied only once for resident weights. This is the key optimization enabling large lm‑head offloading and major PP / TG throughput gains for many models.
     - Pro: Reduces expensive repeated cache maintenance operations on AP side; enables full lm‑head offloading.
     - Con: Subject to Hexagon DSP 32‑bit virtual address space limit (4 GiB). Models exceeding this limit trigger fallback heap‑mirror memcpy path with performance penalty.
 
-4. Removed redundant AP‑side cache‑coherency logic
-    - Old AP‑side cache sync logic from PR #26373 is dropped.
-    - Pro: Enables correct operation on WoA (Windows‑on‑Snapdragon) devices.
-    - Con: Cache management responsibility shifts fully to NPU‑side logic.
 
-5. Minimal incremental code footprint
+4. Minimal incremental code footprint
     - Most source files are unchanged; only a small set of new host‑side / DSP entry / IDL files are added.
     - Pro: Low ongoing maintenance burden; risk of regression is constrained to new files.
     - Con: FastRPC async capability is currently disabled (accepted limitation).
