@@ -207,14 +207,14 @@ Pls refer to: https://github.com/ggml-hexagon/ggml-hexagon/discussions/71
 | Snapdragon X2 Elite | v81  | unknown | Not tested |
 
 ## Known Limitations
-1. 4 GiB DSP virtual‑address‑space limit (HTP‑v75 / v79)
+1. 4 GiB DSP virtual‑address‑space limit (HTP‑v75 / v79) due to limitations in the Qualcomm Hexagon SDK.
     > Hexagon user‑mode has a 32‑bit byte‑addressable address space; user‑mode code can only directly map up to 4 GiB of memory at one time (Qualcomm documentation reference: https://docs.qualcomm.com/doc/80‑N2040‑60/topic/memory.html).
 
     When model weight footprint exceeds 4 GiB (example: Qwen3.5‑9B ~5.1 GiB), the FastRPC backend cannot fit everything inside the shared mempool. It falls back to heap‑allocation with mirror‑buffer memcpy for overflow weights, which introduces substantial token‑generation overhead. This explains the large performance regression observed for Qwen3.5‑9B in benchmark.
 
-2. FastRPC async path is currently disabled.
+2. FastRPC async is currently disabled due to limitations in the Qualcomm Hexagon SDK.
 
-3. There are two large PRs from Qualcomm: [PR #26501](https://github.com/ggml-org/llama.cpp/pull/26501) (commit 192067b72d1b7a3653b3f0c59190303b18596637, "hexagon: support for multi-NPU devices (IQ9, IQ10) and fully asynchronous backend") and [PR #28589](https://github.com/ggml-org/llama.cpp/pull/28589) (commit eafe15a5e3d87dd68ae33acf6a7cbd9415a0ac5e, "hexagon: support for multi-device model split (aka row-split)"). The FastRPC-based ggml-hexagon has no real multi-NPU implementation due to the lack of suitable hardware for development and testing.
+3. There are two large PRs from Qualcomm: [PR #26501](https://github.com/ggml-org/llama.cpp/pull/26501) (commit 192067b72d1b7a3653b3f0c59190303b18596637, "hexagon: support for multi-NPU devices (IQ9, IQ10) and fully asynchronous backend") and [PR #28589](https://github.com/ggml-org/llama.cpp/pull/28589) (commit eafe15a5e3d87dd68ae33acf6a7cbd9415a0ac5e, "hexagon: support for multi-device model split (aka row-split)"). The FastRPC-based ggml-hexagon has no real multi-NPU implementation due to the lack of suitable hardware for development and testing(implementation based on PR-26501 and PR-28589 will be done in less than 24 hours once suitable hardware is available).
 
 ## Contribution Notes
 
