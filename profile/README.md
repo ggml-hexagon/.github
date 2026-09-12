@@ -12,7 +12,7 @@ This dual‑backend pattern mirrors existing patterns inside llama.cpp:
 - ggml‑cuda vs ggml‑hip (re‑use of existing device kernels across host layers)
 
 Both backends share the same Hexagon/HTP kernel source tree; users select transport layer via build‑time CMake option, zero breaking changes to upstream default dspqueue workflow.The real performance difference does not lie in the Hexagon/HTP kernels themselves, but in the scheduling framework, cache policy and offloading strategy
-(See details at https://github.com/zhouwg/ggml-hexagon/blob/self-build-jz/docs/backend/jz-ggml-hexagon/ion-mempool-vs-perbuffer-analysis-20260713.md).
+(See details at [The mempool/FastRPC and dspqueue ggml-hexagon variants: Architecture Analysis](https://github.com/ggml-hexagon/ggml-hexagon/blob/self-build-jz/docs/backend/jz-ggml-hexagon/ion-mempool-vs-perbuffer-analysis-20260713.md)).
 
 FastRPC‑based ggml‑hexagon originated from upstream [PR #12326](https://github.com/ggml-org/llama.cpp/pull/12326), with follow‑up upstream PRs: [PR #26373](https://github.com/ggml-org/llama.cpp/pull/26373), [PR #27642](https://github.com/ggml-org/llama.cpp/pull/27642).
 
