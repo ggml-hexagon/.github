@@ -215,6 +215,8 @@ Pls refer to: https://github.com/ggml-hexagon/ggml-hexagon/discussions/71
 
 2. FastRPC async path is currently disabled.
 
+3. There are two large PRs from Qualcomm: [PR #26501](https://github.com/ggml-org/llama.cpp/pull/26501) (commit 192067b72d1b7a3653b3f0c59190303b18596637, "hexagon: support for multi-NPU devices (IQ9, IQ10) and fully asynchronous backend") and [PR #28589](https://github.com/ggml-org/llama.cpp/pull/28589) (commit eafe15a5e3d87dd68ae33acf6a7cbd9415a0ac5e, "hexagon: support for multi-device model split (aka row-split)"). The FastRPC-based ggml-hexagon has no real multi-NPU implementation due to the lack of suitable hardware for development and testing.
+
 ## Contribution Notes
 
 Follows [CONTRIBUTING.md](https://github.com/ggml-hexagon/ggml-hexagon/blob/self-build-jz/CONTRIBUTING.md).
