@@ -1,7 +1,6 @@
 # FastRPC‑based ggml‑hexagon backend
 > Alternative co‑existing backend for Qualcomm Hexagon NPU (Android / WoS(Windows on Snapdragon) / Linux)
 
-English | [中文](https://github.com/ggml-hexagon/.github/blob/main/profile/README-zh.md) 
  
 ## Overview
 Qualcomm Hexagon SDK exposes two distinct RPC transport mechanisms: native FastRPC and dspqueue.
