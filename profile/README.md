@@ -210,7 +210,7 @@ Pls refer to: https://github.com/ggml-hexagon/ggml-hexagon/discussions/71
 1. 4 GiB DSP virtual‑address‑space limit (HTP‑v75 / v79) due to limitations in the Qualcomm Hexagon SDK.
     > Hexagon user‑mode has a 32‑bit byte‑addressable address space; user‑mode code can only directly map up to 4 GiB of memory at one time (Qualcomm documentation reference: https://docs.qualcomm.com/doc/80‑N2040‑60/topic/memory.html).
 
-    When model weight footprint exceeds 4 GiB (example: Qwen3.5‑9B ~5.1 GiB), the FastRPC backend cannot fit everything inside the shared mempool. It falls back to heap‑allocation with mirror‑buffer memcpy for overflow weights, which introduces substantial token‑generation overhead. This explains the large performance regression observed for Qwen3.5‑9B in benchmark.
+    When model weight footprint exceeds 4 GiB (example: Qwen3.5‑9B ~5.1 GiB), the FastRPC backend cannot fit everything inside the shared mempool. It falls back to heap‑allocation with mirror‑buffer memcpy for overflow weights, which introduces substantial token‑generation overhead. This explains the large performance regression observed for Qwen3.5‑9B/Spark-X2.5-4B in benchmark.
 
 2. FastRPC async is currently disabled due to limitations in the Qualcomm Hexagon SDK.
 
