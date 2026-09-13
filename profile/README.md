@@ -79,7 +79,7 @@ Modified files:
 - ggml/src/ggml‑hexagon/htp/CMakeLists.txt
 
 Optional utility script (for local verification & CI):
-- scripts/build‑run‑ggmlhexagon‑android.sh ------ helper for building variants, pushing binaries to device, running batch AB‑benchmarks. No docker dependency required.
+- scripts/build‑run‑ggmlhexagon‑android.sh ------ helper for building variants, pushing binaries to device, running batch AB‑benchmarks. **No docker dependency required**(The shell-based build & run CI script can be modified to fit your needs --- no black box).
 
 
 
