@@ -216,7 +216,7 @@ Pls refer to: https://github.com/ggml-hexagon/ggml-hexagon/discussions/83
 2. FastRPC async is currently disabled due to limitations in the Qualcomm Hexagon SDK.
 
 3. There are two large PRs from Qualcomm: [PR #26501](https://github.com/ggml-org/llama.cpp/pull/26501) (commit 192067b72d1b7a3653b3f0c59190303b18596637, "hexagon: support for multi-NPU devices (IQ9, IQ10) and fully asynchronous backend") and [PR #28589](https://github.com/ggml-org/llama.cpp/pull/28589) (commit eafe15a5e3d87dd68ae33acf6a7cbd9415a0ac5e, "hexagon: support for multi-device model split (aka row-split)"). The FastRPC-based ggml-hexagon has no real multi-NPU implementation due to the lack of suitable hardware for development and testing(implementation based on PR-26501 and PR-28589 will be done in less than 24 hours once suitable hardware is available).
-4. Regression issue with `llama3` (Llama-3.2-1B-Instruct-Q4_0.gguf), found 2026-09-15 after merging upstream master.
+4. Inference issue with `nanbeige-3b-q80` (Nanbeige_Nanbeige4.2-3B-Q8_0.gguf) because there is tricky issue in QKV/FFN NX fusion, workaround: enable_opfusion = 0.
 
 ## Contribution Notes
 
