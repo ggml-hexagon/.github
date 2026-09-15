@@ -19,7 +19,7 @@ FastRPC‑based ggml‑hexagon originated from upstream [PR #12326](https://gith
 
 ## Key Features
 
-- PP and TG offer [some advantages](https://github.com/ggml-hexagon/ggml-hexagon/discussions/82) over Qualcomm's dspqueue‑based ggml‑hexagon for certain modern models.
+- PP and TG offer [some advantages](https://github.com/ggml-hexagon/ggml-hexagon/discussions/83) over Qualcomm's dspqueue‑based ggml‑hexagon for certain modern models.
   
 - Single shared mempool + Native FastRPC transport
 
@@ -89,13 +89,13 @@ Optional utility script (for local verification & CI):
 
 Snapdragon 8 Elite (aka 8 Gen 4), QCOM_HTP_V79, VTCM=8MB, HVX+HMX
 
-### PP&TG in [dspqueue-based ggml-hexagon(aka Qualcomm's official ggml-hexagon)](https://github.com/ggml-org/llama.cpp/tree/master/ggml/src/ggml-hexagon)
+### PP&TG in dspqueue-based ggml-hexagon(aka Qualcomm's official ggml-hexagon)
 
 <img width="1905" height="401" alt="Screenshot from 2026-08-24 11-21-31" src="https://github.com/user-attachments/assets/657659c4-a341-4e47-9443-fe3b7e01629d" />
 <img width="1907" height="398" alt="Screenshot from 2026-08-24 11-18-40" src="https://github.com/user-attachments/assets/f7500383-692a-4adb-adee-590b033ec67d" />
 <img width="1916" height="335" alt="Image" src="https://github.com/user-attachments/assets/5b766ab7-aaf9-442f-b117-a7ffd12acd22" />
 
-### PP&TG in [FastRPC-based ggml-hexagon](https://github.com/ggml-hexagon)
+### PP&TG in FastRPC-based ggml-hexagon
 
 <img width="1938" height="884" alt="Screenshot from 2026-08-24 11-16-48" src="https://github.com/user-attachments/assets/3f6f9a70-30ba-4b60-b077-8e4cb6470b73" />
 <img width="1908" height="884" alt="Screenshot from 2026-08-24 11-14-48" src="https://github.com/user-attachments/assets/e5875b15-5e65-4092-b316-03412b2a47f8" />
@@ -194,7 +194,7 @@ Usage:
 ```
 ### PP & TG Performance Comparison: dspqueue-based ggml-hexagon vs FastRPC-based ggml-hexagon
 
-Pls refer to: https://github.com/ggml-hexagon/ggml-hexagon/discussions/82
+Pls refer to: https://github.com/ggml-hexagon/ggml-hexagon/discussions/83
 
 ## Verified SoCs
 
