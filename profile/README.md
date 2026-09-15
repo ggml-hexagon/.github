@@ -19,7 +19,7 @@ FastRPC‑based ggml‑hexagon originated from upstream [PR #12326](https://gith
 
 ## Key Features
 
-- PP and TG offer [some advantages](https://github.com/ggml-hexagon/ggml-hexagon/discussions/71) over Qualcomm's dspqueue‑based ggml‑hexagon for certain modern models.
+- PP and TG offer [some advantages](https://github.com/ggml-hexagon/ggml-hexagon/discussions/82) over Qualcomm's dspqueue‑based ggml‑hexagon for certain modern models.
   
 - Single shared mempool + Native FastRPC transport
 
