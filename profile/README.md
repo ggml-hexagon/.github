@@ -194,7 +194,7 @@ Usage:
 ```
 ### PP & TG Performance Comparison: dspqueue-based ggml-hexagon vs FastRPC-based ggml-hexagon
 
-Pls refer to: https://github.com/ggml-hexagon/ggml-hexagon/discussions/71
+Pls refer to: https://github.com/ggml-hexagon/ggml-hexagon/discussions/82
 
 ## Verified SoCs
 
