@@ -102,7 +102,11 @@ Snapdragon 8 Elite (aka 8 Gen 4), QCOM_HTP_V79, VTCM=8MB, HVX+HMX
 <img width="1913" height="881" alt="Image" src="https://github.com/user-attachments/assets/dc0f619d-0534-49bc-92ad-01013b904694" />
 
 ### Eight-Model AB Test Results (fastrpc vs dspqueue)
-
+Device: Qualcomm Snapdragon 8 Elite (aka 8 Gen 4)
+Date: All AB tests complete 2026-09-15 11:49:13
+llama.cpp version: 
+version: 0.4.1-dev (build 11594, [commit 57364ab5b](https://github.com/ggml-hexagon/ggml-hexagon/commit/57364ab5b0a42f69b6408e2c0392a4051767eac8))
+built with Clang 21.0.0 for Android aarch64
 
 | Model        | Layers | Model Size | fastrpc PP | dspqueue PP |    PP Diff | fastrpc TG | dspqueue TG |    TG Diff |
 | ------------ | -----: | ---------- | ---------: | ----------: | ---------: | ---------: | ----------: | ---------: |
@@ -115,6 +119,7 @@ Snapdragon 8 Elite (aka 8 Gen 4), QCOM_HTP_V79, VTCM=8MB, HVX+HMX
 | gemma-4-E4B  |     42 |       4.9GiB |     334.86 |      338.37 |      -1.0% |      14.72 |       10.03 |     +46.8% |
 | Qwen3.5-9B   |     32 |       5.1GiB |      11.05 |       99.35 |     -88.9% |       3.91 |        5.95 |     -34.3% |
 
+Updated eight-model A/B test results can be found at https://github.com/ggml-hexagon/ggml-hexagon/discussions/83
 
 
 ### How to reproduce the benchmark results
